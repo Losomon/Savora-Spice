@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savora Spices – Natural Flavor. Pure Goodness.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green-dark:#1A4A1A;--green-mid:#2D6A2D;--brown:#7B4A1E;
+  --amber:#C4872A;--cream:#FAF7F0;--cream-dark:#F0EBE0;
+  --text:#1C1A16;--text-muted:#6B6355;--white:#FFFFFF;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--cream-dark)}::-webkit-scrollbar-thumb{background:var(--amber);border-radius:2px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5%;transition:all 0.4s}
+nav.scrolled{background:rgba(26,74,26,0.97);backdrop-filter:blur(12px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo-ring{width:40px;height:40px;border:1.5px solid var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.nav-logo-ring span{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--cream);font-weight:600}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--cream);letter-spacing:3px}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{font-size:11px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:rgba(250,247,240,0.75);text-decoration:none;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--amber);transform:scaleX(0);transition:transform 0.3s}
+.nav-links a:hover{color:var(--cream)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{border:1px solid var(--amber)!important;color:var(--amber)!important;padding:8px 18px!important}
+.nav-cta:hover{background:var(--amber)!important;color:var(--green-dark)!important}
+.nav-cta::after{display:none!important}
+.nav-right{display:flex;align-items:center;gap:20px}
+.nav-cart{cursor:pointer;color:rgba(250,247,240,0.8);font-size:19px;position:relative}
+.nav-cart:hover{color:var(--amber)}
+.cart-badge{position:absolute;top:-7px;right:-7px;background:var(--amber);color:var(--green-dark);font-size:9px;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--cream);transition:all 0.3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:0;top:72px;background:rgba(14,42,14,0.98);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:36px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--cream);text-decoration:none;font-weight:300;letter-spacing:2px;transition:color 0.2s}
+.mobile-menu a:hover{color:var(--amber)}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:650px;display:flex;align-items:center;overflow:hidden;background:#071a07}
+#threeCanvas{position:absolute;inset:0;width:100%;height:100%}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(110deg,rgba(7,26,7,0.88) 0%,rgba(7,26,7,0.5) 50%,rgba(7,26,7,0.2) 100%)}
+.hero-content{position:relative;z-index:10;padding:0 7%;max-width:660px}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:24px;opacity:0;animation:slideUp 1s ease 0.2s forwards}
+.hero-line{width:36px;height:1px;background:var(--amber)}
+.hero-eyebrow span{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--amber)}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:80px;line-height:1.0;font-weight:300;color:var(--cream);margin-bottom:26px;opacity:0;animation:slideUp 1s ease 0.4s forwards}
+.hero h1 em{font-style:italic;color:var(--amber)}
+.hero-sub{font-size:15px;line-height:1.9;color:rgba(250,247,240,0.65);font-weight:300;margin-bottom:44px;max-width:460px;opacity:0;animation:slideUp 1s ease 0.6s forwards}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:slideUp 1s ease 0.8s forwards}
+@keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.btn-amber{background:var(--amber);color:var(--green-dark);padding:15px 34px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;border:none;cursor:pointer;text-decoration:none;transition:all 0.25s;display:inline-block}
+.btn-amber:hover{background:#d4972a;transform:translateY(-1px)}
+.btn-ghost{border:1px solid rgba(250,247,240,0.35);color:rgba(250,247,240,0.8);padding:15px 34px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:400;background:transparent;cursor:pointer;text-decoration:none;transition:all 0.25s;display:inline-block}
+.btn-ghost:hover{border-color:var(--cream);color:var(--cream)}
+.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(250,247,240,0.35);font-size:10px;letter-spacing:3px;text-transform:uppercase;z-index:10}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--amber),transparent);animation:scrollPulse 2s ease infinite}
+@keyframes scrollPulse{0%,100%{opacity:0.3}50%{opacity:1}}
+.hero-stats{position:absolute;bottom:0;right:0;display:flex;background:rgba(7,26,7,0.92);border-top:1px solid rgba(196,135,42,0.2);border-left:1px solid rgba(196,135,42,0.2);z-index:10}
+.hero-stat{padding:18px 28px;border-right:1px solid rgba(196,135,42,0.15);text-align:center}
+.hero-stat:last-child{border-right:none}
+.hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--amber);font-weight:300}
+.hero-stat-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,247,240,0.4);margin-top:3px}
+
+/* QUOTE BG */
+.quote-section{position:relative;height:55vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.quote-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.quote-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,26,7,0.65),rgba(7,26,7,0.85))}
+.quote-content{position:relative;z-index:2;text-align:center;color:var(--cream);padding:0 5%}
+.quote-text{font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:300;line-height:1.2;margin-bottom:16px}
+.quote-text em{font-style:italic;color:var(--amber)}
+.quote-attr{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(250,247,240,0.45)}
+
+/* SECTIONS */
+section{padding:88px 7%}
+.section-label{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.section-label-line{width:28px;height:1px;background:var(--amber)}
+.section-label span{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);font-weight:500}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--green-dark);line-height:1.1;margin-bottom:16px}
+.section-sub{font-size:15px;color:var(--text-muted);line-height:1.9;max-width:520px;font-weight:300}
+.section-header{margin-bottom:56px}
+
+/* SHOP */
+.shop{background:var(--white)}
+.shop-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;align-items:center}
+.filter-btn{padding:9px 20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:500;border:1px solid rgba(123,74,30,0.2);background:transparent;color:var(--text-muted);cursor:pointer;transition:all 0.22s;font-family:'Jost',sans-serif}
+.filter-btn.active,.filter-btn:hover{background:var(--green-dark);color:var(--cream);border-color:var(--green-dark)}
+.search-wrap{margin-left:auto;display:flex;align-items:center;gap:10px;border:1px solid rgba(123,74,30,0.2);padding:9px 16px;background:var(--cream)}
+.search-wrap input{border:none;outline:none;font-family:'Jost',sans-serif;font-size:13px;color:var(--text);background:transparent;width:200px}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1px;background:rgba(123,74,30,0.1)}
+.product-card{background:var(--white);cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
+.product-card:hover{background:var(--cream)}
+.product-card:hover .product-img-real{transform:scale(1.06)}
+.product-img-wrap{height:240px;overflow:hidden;position:relative}
+.product-img-real{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease}
+.product-badge{position:absolute;top:14px;left:0;background:var(--amber);color:var(--green-dark);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;font-weight:600}
+.product-info{padding:22px}
+.product-origin{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:5px}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--green-dark);margin-bottom:6px}
+.product-desc{font-size:12px;color:var(--text-muted);line-height:1.75;margin-bottom:14px;font-weight:300}
+.product-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.product-tag{font-size:9px;padding:3px 9px;border:1px solid rgba(45,106,45,0.25);color:var(--green-mid);letter-spacing:0.5px;text-transform:uppercase}
+.product-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid rgba(123,74,30,0.08)}
+.product-price{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--brown)}
+.product-price span{font-size:11px;color:var(--text-muted);font-family:'Jost',sans-serif;font-weight:300}
+.add-btn{background:var(--green-dark);color:var(--cream);border:none;padding:9px 18px;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;transition:background 0.2s}
+.add-btn:hover{background:var(--green-mid)}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);max-width:800px;width:100%;max-height:92vh;overflow-y:auto;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-muted);z-index:10}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr}
+.modal-img-wrap{min-height:380px;overflow:hidden}
+.modal-img-wrap img{width:100%;height:100%;object-fit:cover}
+.modal-details{padding:36px 30px;overflow-y:auto;max-height:92vh}
+.modal-origin{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.modal-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--green-dark);margin-bottom:12px;line-height:1.1}
+.modal-desc{font-size:13px;color:var(--text-muted);line-height:1.85;margin-bottom:20px;font-weight:300}
+.modal-attr{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(123,74,30,0.08);font-size:12px}
+.modal-attr-label{color:var(--text-muted);font-weight:300}
+.modal-attr-value{color:var(--green-dark);font-weight:500;text-align:right;max-width:55%}
+.size-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin:18px 0 10px}
+.size-options{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.size-btn{padding:8px 16px;border:1px solid rgba(123,74,30,0.2);background:transparent;font-size:11px;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s;color:var(--text-muted)}
+.size-btn.active{border-color:var(--green-dark);color:var(--green-dark);background:rgba(26,74,26,0.05);font-weight:500}
+.modal-price{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--brown);margin-bottom:16px}
+.modal-add{width:100%;background:var(--green-dark);color:var(--cream);border:none;padding:14px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;transition:background 0.2s;margin-bottom:10px}
+.modal-add:hover{background:var(--green-mid)}
+.modal-guide-link{display:block;text-align:center;font-size:11px;color:var(--green-mid);letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;padding:8px}
+
+/* HOW TO USE */
+.howto{background:var(--cream)}
+.howto-grid{display:grid;grid-template-columns:260px 1fr;gap:0}
+.howto-sidebar{border-right:1px solid rgba(123,74,30,0.12);padding-right:36px;position:sticky;top:100px;align-self:start}
+.howto-nav-item{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid rgba(123,74,30,0.08);cursor:pointer;transition:all 0.2s}
+.hwn-num{font-family:'Cormorant Garamond',serif;font-size:22px;color:rgba(123,74,30,0.2);min-width:28px;transition:color 0.2s}
+.howto-nav-item.active .hwn-num{color:var(--amber)}
+.hwn-label{font-size:13px;color:var(--text-muted);font-weight:300;transition:color 0.2s}
+.howto-nav-item.active .hwn-label,.howto-nav-item:hover .hwn-label{color:var(--green-dark)}
+.howto-body{padding-left:56px}
+.how-article{display:none}
+.how-article.active{display:block;animation:fadeSlide 0.4s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+.how-hero-img{width:100%;height:260px;object-fit:cover;margin-bottom:28px}
+.how-sub{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+.how-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--green-dark);margin-bottom:18px;line-height:1.1}
+.how-body{font-size:14px;color:var(--text-muted);line-height:2;font-weight:300;margin-bottom:28px}
+.recipe-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+.recipe-card{position:relative;overflow:hidden;cursor:pointer}
+.recipe-img{width:100%;height:140px;object-fit:cover;transition:transform 0.4s}
+.recipe-card:hover .recipe-img{transform:scale(1.05)}
+.recipe-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,26,7,0.85),transparent);display:flex;flex-direction:column;justify-content:flex-end;padding:14px}
+.recipe-name{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--cream);margin-bottom:2px}
+.recipe-time{font-size:10px;color:rgba(250,247,240,0.55);letter-spacing:1.5px;text-transform:uppercase}
+.pairing-row{display:flex;gap:8px;flex-wrap:wrap}
+.pairing-chip{border:1px solid rgba(26,74,26,0.2);color:var(--green-dark);padding:8px 14px;font-size:11px;background:rgba(26,74,26,0.04)}
+
+/* REVIEWS */
+.reviews{background:var(--white)}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+.review-card{background:var(--cream);padding:28px;border:1px solid rgba(123,74,30,0.08);transition:transform 0.25s}
+.review-card:hover{transform:translateY(-3px)}
+.review-stars{display:flex;gap:3px;margin-bottom:12px}
+.star{color:var(--amber);font-size:14px}
+.star.empty{color:rgba(123,74,30,0.2)}
+.review-text{font-size:14px;color:var(--text-muted);line-height:1.85;font-weight:300;margin-bottom:16px;font-style:italic}
+.review-text::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--amber);line-height:0;vertical-align:-10px;margin-right:4px}
+.reviewer{display:flex;align-items:center;gap:12px}
+.reviewer-avatar{width:38px;height:38px;border-radius:50%;background:var(--green-dark);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--cream);font-weight:400;flex-shrink:0}
+.reviewer-name{font-size:13px;color:var(--green-dark);font-weight:500}
+.reviewer-location{font-size:11px;color:var(--text-muted);font-weight:300}
+
+/* SPICE QUIZ */
+.quiz-section{background:var(--green-dark);padding:88px 7%}
+.quiz-wrap{max-width:680px;margin:0 auto;text-align:center}
+.quiz-wrap .section-label{justify-content:center}
+.quiz-wrap .section-title{color:var(--cream);font-size:44px}
+.quiz-wrap .section-sub{color:rgba(250,247,240,0.6);margin:0 auto 44px;text-align:center}
+.quiz-step{display:none}
+.quiz-step.active{display:block;animation:fadeSlide 0.4s ease}
+.quiz-q{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--cream);margin-bottom:28px;font-weight:300;line-height:1.3}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+.quiz-opt{background:rgba(250,247,240,0.06);border:1px solid rgba(250,247,240,0.15);color:rgba(250,247,240,0.8);padding:16px 20px;font-size:13px;cursor:pointer;transition:all 0.22s;font-family:'Jost',sans-serif;text-align:left;letter-spacing:0.3px}
+.quiz-opt:hover,.quiz-opt.selected{background:rgba(196,135,42,0.2);border-color:var(--amber);color:var(--cream)}
+.quiz-progress{display:flex;gap:6px;justify-content:center;margin-bottom:32px}
+.quiz-dot{width:6px;height:6px;border-radius:50%;background:rgba(250,247,240,0.2);transition:background 0.3s}
+.quiz-dot.active{background:var(--amber)}
+.quiz-result{background:rgba(250,247,240,0.06);border:1px solid rgba(196,135,42,0.3);padding:36px;text-align:center}
+.quiz-result-emoji{font-size:52px;margin-bottom:16px}
+.quiz-result-spice{font-family:'Cormorant Garamond',serif;font-size:40px;color:var(--amber);margin-bottom:8px}
+.quiz-result-desc{font-size:14px;color:rgba(250,247,240,0.65);line-height:1.9;font-weight:300;margin-bottom:24px}
+.quiz-restart{background:none;border:1px solid rgba(250,247,240,0.3);color:rgba(250,247,240,0.6);padding:10px 24px;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s}
+.quiz-restart:hover{border-color:var(--cream);color:var(--cream)}
+
+/* ABOUT */
+.about-section{background:var(--green-dark);position:relative;overflow:hidden;padding:88px 7%}
+.about-bg{position:absolute;right:0;top:0;bottom:0;width:45%;object-fit:cover;opacity:0.18}
+.about-content{position:relative;z-index:2;max-width:56%}
+.about .section-label span,.about-section .section-label span{color:var(--amber)}
+.about-section .section-title{color:var(--cream)}
+.about-body{font-size:15px;line-height:2;color:rgba(250,247,240,0.65);font-weight:300;margin-bottom:36px}
+.about-values{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.about-value{border-left:2px solid var(--amber);padding:4px 0 4px 16px}
+.about-value-title{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--cream);margin-bottom:4px}
+.about-value-desc{font-size:12px;color:rgba(250,247,240,0.45);line-height:1.7;font-weight:300}
+.about-img-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:56px}
+.about-strip-img{height:200px;object-fit:cover;width:100%}
+
+/* MAP */
+.map-section{background:var(--cream-dark);padding:88px 7%}
+.map-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.map-iframe{width:100%;height:380px;border:0;filter:grayscale(20%)}
+.map-info{display:flex;flex-direction:column;gap:22px}
+.map-info-item{display:flex;gap:16px;align-items:flex-start}
+.map-icon{width:40px;height:40px;background:var(--green-dark);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.map-info-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:4px}
+.map-info-text{font-size:14px;color:var(--text-muted);font-weight:300;line-height:1.7}
+
+/* FAQ */
+.faq-section{background:var(--cream-dark)}
+.faq-list{max-width:760px}
+.faq-item{border-bottom:1px solid rgba(123,74,30,0.12)}
+.faq-q{width:100%;background:none;border:none;text-align:left;padding:22px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Jost',sans-serif;font-size:15px;color:var(--text);gap:20px}
+.faq-q:hover{color:var(--green-dark)}
+.faq-icon{font-size:20px;color:var(--amber);flex-shrink:0;transition:transform 0.35s}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a p{font-size:14px;color:var(--text-muted);line-height:1.9;font-weight:300;padding-bottom:20px}
+
+/* PREMIUM */
+.premium-section{background:var(--white);padding:0}
+.premium-inner{display:grid;grid-template-columns:1fr 1fr;min-height:580px}
+.premium-img-side{position:relative;overflow:hidden}
+.premium-img-side img{width:100%;height:100%;object-fit:cover}
+.premium-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,74,26,0.72),rgba(123,74,30,0.4))}
+.premium-img-text{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:48px;color:var(--cream)}
+.premium-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.premium-img-title{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:300;line-height:1.1}
+.premium-form-side{padding:56px 44px;display:flex;flex-direction:column;justify-content:center}
+.premium-form-side .section-title{font-size:36px;margin-bottom:12px}
+.premium-desc{font-size:14px;color:var(--text-muted);line-height:1.9;font-weight:300;margin-bottom:28px}
+.premium-features{margin-bottom:32px}
+.pf-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(123,74,30,0.08);font-size:13px;color:var(--text-muted)}
+.pf-item:last-child{border:none}
+.pf-dot{width:5px;height:5px;border-radius:50%;background:var(--amber);flex-shrink:0;margin-top:6px}
+.notify-form{display:flex}
+.notify-form input{flex:1;padding:14px 16px;border:1px solid rgba(123,74,30,0.25);border-right:none;font-family:'Jost',sans-serif;font-size:13px;color:var(--text);background:var(--cream);outline:none}
+.notify-form input:focus{border-color:var(--green-mid)}
+
+/* FOOTER */
+footer{background:#071a07;color:rgba(250,247,240,0.5);padding:0}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;padding:68px 7% 44px}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--cream);letter-spacing:2px;margin-bottom:6px}
+.footer-tagline{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:18px}
+.footer-about-text{font-size:13px;line-height:1.8;font-weight:300}
+.footer-col-title{font-size:9px;letter-spacing:3.5px;text-transform:uppercase;color:var(--amber);margin-bottom:18px;font-weight:500}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:11px}
+.footer-links a{font-size:13px;color:rgba(250,247,240,0.4);text-decoration:none;transition:color 0.2s;font-weight:300}
+.footer-links a:hover{color:var(--cream)}
+.footer-bottom{border-top:1px solid rgba(250,247,240,0.06);padding:22px 7%;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:11px}
+.footer-right{font-size:11px;color:rgba(250,247,240,0.3)}
+
+/* FLOATING BUTTONS */
+.whatsapp-btn{position:fixed;bottom:32px;right:28px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;box-shadow:0 6px 24px rgba(37,211,102,0.4);z-index:150;transition:all 0.25s;text-decoration:none}
+.whatsapp-btn:hover{transform:scale(1.08);box-shadow:0 8px 32px rgba(37,211,102,0.55)}
+.whatsapp-tooltip{position:absolute;right:68px;background:var(--green-dark);color:var(--cream);padding:8px 14px;font-size:12px;white-space:nowrap;border-radius:2px;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.whatsapp-btn:hover .whatsapp-tooltip{opacity:1}
+.back-top{position:fixed;bottom:100px;right:28px;width:44px;height:44px;background:var(--green-dark);border:1px solid rgba(196,135,42,0.3);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:150;opacity:0;transform:translateY(10px);transition:all 0.3s;color:var(--cream);font-size:16px}
+.back-top.visible{opacity:1;transform:translateY(0)}
+.back-top:hover{background:var(--green-mid)}
+
+/* CART SIDEBAR */
+.cart-sidebar{position:fixed;right:0;top:0;bottom:0;width:375px;background:var(--white);z-index:250;box-shadow:-12px 0 60px rgba(0,0,0,0.18);transform:translateX(100%);transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column}
+.cart-sidebar.open{transform:translateX(0)}
+.cart-header{padding:24px 26px;border-bottom:1px solid rgba(123,74,30,0.1);display:flex;justify-content:space-between;align-items:center}
+.cart-title{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--green-dark);font-weight:300}
+.cart-close-btn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted)}
+.cart-items{flex:1;overflow-y:auto;padding:18px 26px}
+.cart-empty{text-align:center;padding:60px 0;color:var(--text-muted);font-size:14px;font-weight:300;line-height:2}
+.cart-item{display:flex;gap:14px;padding:15px 0;border-bottom:1px solid rgba(123,74,30,0.07)}
+.cart-item-img{width:54px;height:54px;object-fit:cover;flex-shrink:0}
+.cart-item-details{flex:1}
+.cart-item-name{font-size:14px;color:var(--green-dark);font-weight:500;margin-bottom:2px}
+.cart-item-size{font-size:11px;color:var(--text-muted);margin-bottom:5px;font-weight:300}
+.cart-item-price{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--brown)}
+.cart-item-remove{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:15px;align-self:flex-start;margin-top:2px}
+.cart-footer{padding:22px 26px;border-top:1px solid rgba(123,74,30,0.1)}
+.cart-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
+.cart-total-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-muted)}
+.cart-total-amount{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--green-dark)}
+.checkout-btn{width:100%;background:var(--green-dark);color:var(--cream);border:none;padding:15px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500}
+.checkout-btn:hover{background:var(--green-mid)}
+
+/* TOAST */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green-dark);color:var(--cream);padding:14px 26px;font-size:13px;z-index:400;opacity:0;transition:all 0.4s;pointer-events:none;white-space:nowrap;border-left:3px solid var(--amber)}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:500;opacity:0.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero h1{font-size:50px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .about-content{max-width:100%}
+  .about-bg{opacity:0.07}
+  .premium-inner,.modal-grid,.howto-grid,.map-grid,.footer-top{grid-template-columns:1fr}
+  .howto-sidebar{position:static;padding-right:0;padding-bottom:28px;border-right:none;border-bottom:1px solid rgba(123,74,30,0.12)}
+  .howto-body{padding-left:0;padding-top:36px}
+  .recipe-grid{grid-template-columns:1fr}
+  .quiz-options{grid-template-columns:1fr}
+  .hero-stats{position:static}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-ring"><span>S</span></div>
+      <span class="nav-brand">SAVORA SPICES</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#howto">How to Use</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#premium" class="nav-cta">Premium</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="nav-cart" onclick="toggleCart()">🛒<span class="cart-badge" id="cartBadge">0</span></div>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#shop" onclick="toggleMenu()">Shop</a>
+  <a href="#howto" onclick="toggleMenu()">How to Use</a>
+  <a href="#reviews" onclick="toggleMenu()">Reviews</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#premium" onclick="toggleMenu()" style="color:var(--amber)">Premium</a>
+</div>
+
+<!-- HERO - THREE.JS 3D JARS -->
+<section class="hero">
+  <canvas id="threeCanvas"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><div class="hero-line"></div><span>Nairobi, Kenya · Est. 2024</span></div>
+    <h1>Natural<br>Flavor.<br><em>Pure Goodness.</em></h1>
+    <p class="hero-sub">Premium spices and herbs sourced from the world's finest growing regions. Every dish deserves the best.</p>
+    <div class="hero-actions">
+      <a href="#shop" class="btn-amber">Explore Shop</a>
+      <a href="#quiz" class="btn-ghost">Find Your Spice</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span>Scroll</span></div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">50+</div><div class="hero-stat-label">Spices & Herbs</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">100%</div><div class="hero-stat-label">Pure, No Fillers</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">Kenya</div><div class="hero-stat-label">Wide Delivery</div></div>
+  </div>
+</section>
+
+<!-- QUOTE SECTION -->
+<div class="quote-section">
+  <img class="quote-bg" src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1600&auto=format&fit=crop&q=80" alt="spices">
+  <div class="quote-overlay"></div>
+  <div class="quote-content">
+    <div class="quote-text">"Spices are the <em>poetry</em> of the kitchen."</div>
+    <div class="quote-attr">— The Savora Philosophy</div>
+  </div>
+</div>
+
+<!-- SHOP -->
+<section class="shop" id="shop">
+  <div class="section-header">
+    <div class="section-label"><div class="section-label-line"></div><span>Our Collection</span></div>
+    <h2 class="section-title">Shop Spices & Herbs</h2>
+    <p class="section-sub">All natural. No preservatives, no anti-caking agents. Pure flavour from farm to table.</p>
+  </div>
+  <div class="shop-controls">
+    <button class="filter-btn active" onclick="filterProducts('all',this)">All</button>
+    <button class="filter-btn" onclick="filterProducts('spice',this)">Spices</button>
+    <button class="filter-btn" onclick="filterProducts('herb',this)">Herbs</button>
+    <button class="filter-btn" onclick="filterProducts('blend',this)">Blends</button>
+    <button class="filter-btn" onclick="filterProducts('gift',this)">Gift Sets</button>
+    <div class="search-wrap">
+      <span style="color:var(--text-muted)">⌕</span>
+      <input type="text" placeholder="Search spices..." id="searchInput" oninput="searchProducts()">
+    </div>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal"><button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-grid">
+      <div class="modal-img-wrap"><img id="modalImg" src="" alt=""></div>
+      <div class="modal-details">
+        <p class="modal-origin" id="modalOrigin"></p>
+        <h2 class="modal-name" id="modalName"></h2>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div id="modalAttrs"></div>
+        <p class="size-label">Select Size</p>
+        <div class="size-options" id="sizeOptions"></div>
+        <p class="modal-price" id="modalPrice"></p>
+        <button class="modal-add" id="modalAddBtn">Add to Cart</button>
+        <a href="#howto" class="modal-guide-link" onclick="closeModalDirect()">View Usage Guide →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW TO USE -->
+<section class="howto" id="howto">
+  <div class="section-header">
+    <div class="section-label"><div class="section-label-line"></div><span>Knowledge</span></div>
+    <h2 class="section-title">How to Use Your Spices</h2>
+    <p class="section-sub">From toasting techniques to perfect pairings — master every spice in your kitchen.</p>
+  </div>
+  <div class="howto-grid">
+    <div class="howto-sidebar" id="howtoNav"></div>
+    <div class="howto-body" id="howtoContent"></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="section-header">
+    <div class="section-label"><div class="section-label-line"></div><span>What Customers Say</span></div>
+    <h2 class="section-title">Loved Across Kenya</h2>
+    <p class="section-sub">Real reviews from real Savora customers who have tasted the difference.</p>
+  </div>
+  <div class="reviews-grid" id="reviewsGrid"></div>
+</section>
+
+<!-- SPICE QUIZ -->
+<section class="quiz-section" id="quiz">
+  <div class="quiz-wrap">
+    <div class="section-label"><div class="section-label-line"></div><span>Spice Quiz</span></div>
+    <h2 class="section-title" style="color:var(--cream)">Find Your Spice Tonight</h2>
+    <p class="section-sub" style="margin:0 auto 40px;text-align:center">Answer 3 quick questions and we'll match you with your perfect spice.</p>
+    <div class="quiz-progress" id="quizProgress"></div>
+    <div id="quizSteps"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section about" id="about">
+  <img class="about-bg" src="https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=900&auto=format&fit=crop&q=80" alt="spices">
+  <div class="about-content">
+    <div class="section-label"><div class="section-label-line"></div><span>Our Story</span></div>
+    <h2 class="section-title" style="color:var(--cream)">Born from a love<br>of real flavour</h2>
+    <p class="about-body">Savora Spices was founded with a simple belief: your food deserves better. We source directly from trusted farms across East Africa, India, and beyond — bringing you spices that are fresher, purer, and more vibrant than anything on a supermarket shelf.<br><br>Every jar carries the care of the farmers who grew it, and our promise to deliver nothing but natural goodness to your kitchen in Nairobi and beyond.</p>
+    <div class="about-values">
+      <div class="about-value"><div class="about-value-title">Pure Quality</div><div class="about-value-desc">No fillers, no anti-caking agents, no artificial colours. Ever.</div></div>
+      <div class="about-value"><div class="about-value-title">Direct Sourcing</div><div class="about-value-desc">We work directly with farmers for freshness and fairness.</div></div>
+      <div class="about-value"><div class="about-value-title">Kenya Proud</div><div class="about-value-desc">Based in Nairobi, delivering across Kenya with care.</div></div>
+      <div class="about-value"><div class="about-value-title">Sustainable</div><div class="about-value-desc">Eco-conscious packaging and responsible sourcing.</div></div>
+    </div>
+  </div>
+  <div class="about-img-strip">
+    <img class="about-strip-img" src="https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=600&auto=format&fit=crop&q=80" alt="spice market">
+    <img class="about-strip-img" src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&auto=format&fit=crop&q=80" alt="spices in bowls">
+    <img class="about-strip-img" src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&auto=format&fit=crop&q=80" alt="herbs">
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section" id="location">
+  <div class="section-header">
+    <div class="section-label"><div class="section-label-line"></div><span>Find Us</span></div>
+    <h2 class="section-title">Visit Us in Nairobi</h2>
+    <p class="section-sub">We're based in Nairobi, Kenya. Order online or contact us directly for pickup.</p>
+  </div>
+  <div class="map-grid">
+    <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255282.35853743127!2d36.68258462226563!3d-1.3031933999999967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2sus!4v1699000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="map-info">
+      <div class="map-info-item"><div class="map-icon">📍</div><div><div class="map-info-label">Location</div><div class="map-info-text">Nairobi, Kenya<br>Serving all of Kenya</div></div></div>
+      <div class="map-info-item"><div class="map-icon">📱</div><div><div class="map-info-label">WhatsApp & Phone</div><div class="map-info-text">+254 700 000 000<br>Mon – Sat, 8am – 7pm</div></div></div>
+      <div class="map-info-item"><div class="map-icon">✉️</div><div><div class="map-info-label">Email</div><div class="map-info-text">hello@savoraspices.co.ke</div></div></div>
+      <div class="map-info-item"><div class="map-icon">🚚</div><div><div class="map-info-label">Delivery</div><div class="map-info-text">Nairobi same-day / next-day<br>Countrywide 2–3 business days</div></div></div>
+      <a href="https://wa.me/254700000000" target="_blank" class="btn-amber" style="align-self:flex-start;margin-top:8px">Order on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq" style="padding:88px 7%">
+  <div class="section-header">
+    <div class="section-label"><div class="section-label-line"></div><span>Questions</span></div>
+    <h2 class="section-title">Frequently Asked</h2>
+    <p class="section-sub">Everything you need to know before you cook.</p>
+  </div>
+  <div class="faq-list" id="faqList"></div>
+</section>
+
+<!-- PREMIUM -->
+<section class="premium-section" id="premium">
+  <div class="premium-inner">
+    <div class="premium-img-side">
+      <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=900&auto=format&fit=crop&q=80" alt="premium spices">
+      <div class="premium-img-overlay"></div>
+      <div class="premium-img-text"><div class="premium-tag">Coming Soon</div><div class="premium-img-title">Savora<br><em style="font-style:italic;color:var(--amber)">Premium</em></div></div>
+    </div>
+    <div class="premium-form-side">
+      <div class="section-label" style="margin-bottom:10px"><div class="section-label-line"></div><span>Exclusive Access</span></div>
+      <h2 class="section-title" style="font-size:36px;margin-bottom:12px">Unlock a world<br>of rare spices</h2>
+      <p class="premium-desc">Monthly curated boxes, chef masterclasses, rare single-origin spices and personal consultations.</p>
+      <div class="premium-features">
+        <div class="pf-item"><div class="pf-dot"></div>Rare & single-origin spices not sold publicly</div>
+        <div class="pf-item"><div class="pf-dot"></div>Monthly curated spice box (5–8 spices)</div>
+        <div class="pf-item"><div class="pf-dot"></div>Video masterclasses with professional chefs</div>
+        <div class="pf-item"><div class="pf-dot"></div>Personal spice pairing consultations</div>
+        <div class="pf-item"><div class="pf-dot"></div>Priority delivery across Kenya</div>
+      </div>
+      <div class="notify-form"><input type="email" placeholder="Your email address" id="premiumEmail"><button class="btn-amber" onclick="joinWaitlist()">Notify Me</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">SAVORA SPICES</div>
+      <div class="footer-tagline">Natural Flavor. Pure Goodness.</div>
+      <p class="footer-about-text">Premium spices and herbs delivered across Kenya. No fillers, no shortcuts — just pure flavour from farm to table.</p>
+    </div>
+    <div><div class="footer-col-title">Shop</div><ul class="footer-links"><li><a href="#shop">All Spices</a></li><li><a href="#shop">Herbs</a></li><li><a href="#shop">Blends</a></li><li><a href="#shop">Gift Sets</a></li></ul></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="#howto">How to Use</a></li><li><a href="#quiz">Spice Quiz</a></li><li><a href="#faq">FAQ</a></li><li><a href="#about">About</a></li></ul></div>
+    <div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><a href="https://wa.me/254700000000" target="_blank">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Email Us</a></li><li><a href="#location">Find Us</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span class="footer-copy">© 2024 Savora Spices. All rights reserved.</span><span class="footer-right">Nairobi, Kenya</span></div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<a href="https://wa.me/254700000000" target="_blank" class="whatsapp-btn">
+  <span class="whatsapp-tooltip">Chat on WhatsApp</span>💬
+</a>
+<div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header"><span class="cart-title">Your Cart</span><button class="cart-close-btn" onclick="toggleCart()">✕</button></div>
+  <div class="cart-items" id="cartItems"><div class="cart-empty">Your cart is empty<br><br>Add some spices to get started!</div></div>
+  <div class="cart-footer">
+    <div class="cart-total"><span class="cart-total-label">Total</span><span class="cart-total-amount" id="cartTotal">KSh 0</span></div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// =================== THREE.JS 3D SPICE JARS ===================
+(function(){
+  const canvas = document.getElementById('threeCanvas');
+  const W = window.innerWidth, H = window.innerHeight;
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(W,H);
+  renderer.shadowMap.enabled = true;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, W/H, 0.1, 100);
+  camera.position.set(0, 0.5, 7);
+
+  // Lighting
+  scene.add(new THREE.AmbientLight(0xfff5e0, 0.7));
+  const key = new THREE.DirectionalLight(0xffe4a0, 1.8);
+  key.position.set(4,6,5); key.castShadow=true; scene.add(key);
+  const fill = new THREE.DirectionalLight(0x4a8a3a, 0.6);
+  fill.position.set(-4,-2,-4); scene.add(fill);
+  const back = new THREE.PointLight(0xC4872A, 0.8, 20);
+  back.position.set(0,3,-3); scene.add(back);
+
+  // Wooden shelf
+  const shelfGeo = new THREE.BoxGeometry(14,0.18,2.5);
+  const shelfMat = new THREE.MeshPhongMaterial({color:0x5C3317,shininess:30});
+  const shelf = new THREE.Mesh(shelfGeo, shelfMat);
+  shelf.position.set(0,-1.55,0); shelf.receiveShadow=true; scene.add(shelf);
+  // Shelf edge detail
+  const edgeGeo = new THREE.BoxGeometry(14,0.06,0.1);
+  const edge = new THREE.Mesh(edgeGeo, new THREE.MeshPhongMaterial({color:0x3E2208}));
+  edge.position.set(0,-1.46,1.25); scene.add(edge);
+
+  // Spice jar data
+  const jars = [
+    {name:'Turmeric',color:0xE8A020,lidColor:0x5C3317,x:-3.2,spiceColor:0xF5C518},
+    {name:'Cinnamon',color:0x8B4513,lidColor:0x3E2208,x:-1.6,spiceColor:0x7B3410},
+    {name:'Paprika',color:0xC0392B,lidColor:0x5C3317,x:0,spiceColor:0xC0392B},
+    {name:'Cardamom',color:0x2D6A2D,lidColor:0x1A4A1A,x:1.6,spiceColor:0x3A7A3A},
+    {name:'Rosemary',color:0x4A7C4E,lidColor:0x2D5A30,x:3.2,spiceColor:0x3A6A3E},
+  ];
+
+  const jarMeshes = [];
+
+  jars.forEach((d,i)=>{
+    const group = new THREE.Group();
+    group.position.set(d.x, -0.3, 0);
+
+    // Glass jar body
+    const jarGeo = new THREE.CylinderGeometry(0.38,0.34,1.6,32,1,true);
+    const glassMat = new THREE.MeshPhongMaterial({
+      color:0xd0e8f0, transparent:true, opacity:0.28,
+      shininess:200, specular:0xffffff, side:THREE.DoubleSide
+    });
+    const jarMesh = new THREE.Mesh(jarGeo, glassMat);
+    group.add(jarMesh);
+
+    // Jar bottom
+    const botGeo = new THREE.CylinderGeometry(0.34,0.34,0.06,32);
+    const botMesh = new THREE.Mesh(botGeo, new THREE.MeshPhongMaterial({color:0xc0dce8,transparent:true,opacity:0.5,shininess:150}));
+    botMesh.position.y = -0.83; group.add(botMesh);
+
+    // Spice content inside jar
+    const spiceGeo = new THREE.CylinderGeometry(0.32,0.30,0.9,24);
+    const spiceMat = new THREE.MeshPhongMaterial({color:d.spiceColor, shininess:10});
+    const spiceMesh = new THREE.Mesh(spiceGeo, spiceMat);
+    spiceMesh.position.y = -0.38; group.add(spiceMesh);
+
+    // Label (white rectangle mapped to jar)
+    const labelGeo = new THREE.CylinderGeometry(0.39,0.36,0.65,32,1,true, 0.3, Math.PI*1.4);
+    const labelMat = new THREE.MeshPhongMaterial({color:0xFAF7F0,shininess:5,side:THREE.DoubleSide});
+    const labelMesh = new THREE.Mesh(labelGeo, labelMat);
+    labelMesh.position.y = 0.1; group.add(labelMesh);
+
+    // Label text band (colored strip)
+    const bandGeo = new THREE.CylinderGeometry(0.391,0.361,0.1,32,1,true, 0.3, Math.PI*1.4);
+    const bandMat = new THREE.MeshPhongMaterial({color:d.color,shininess:20,side:THREE.DoubleSide});
+    const bandMesh = new THREE.Mesh(bandGeo, bandMat);
+    bandMesh.position.y = 0.48; group.add(bandMesh);
+
+    // Cork lid
+    const lidGeo = new THREE.CylinderGeometry(0.36,0.36,0.22,24);
+    const lidMat = new THREE.MeshPhongMaterial({color:d.lidColor,shininess:15});
+    const lid = new THREE.Mesh(lidGeo, lidMat);
+    lid.position.y = 0.93; group.add(lid);
+
+    // Lid top disc
+    const lidTopGeo = new THREE.CylinderGeometry(0.4,0.4,0.06,24);
+    const lidTop = new THREE.Mesh(lidTopGeo, new THREE.MeshPhongMaterial({color:d.lidColor,shininess:20}));
+    lidTop.position.y = 1.07; group.add(lidTop);
+
+    // Rim ring
+    const rimGeo = new THREE.TorusGeometry(0.38,0.025,8,32);
+    const rim = new THREE.Mesh(rimGeo, new THREE.MeshPhongMaterial({color:0xc8d8e0,shininess:180}));
+    rim.position.y = 0.8; group.add(rim);
+
+    // Shadow
+    jarMesh.castShadow = true; lid.castShadow = true;
+
+    group.userData = {
+      baseY: group.position.y,
+      floatSpeed: 0.4 + i*0.13,
+      floatAmp: 0.08 + i*0.01,
+      floatOffset: i * (Math.PI*2/5),
+      rotBase: group.rotation.y,
+    };
+
+    scene.add(group);
+    jarMeshes.push(group);
+  });
+
+  // Dust particles
+  const dustCount = 600;
+  const dustPos = new Float32Array(dustCount*3);
+  const dustCol = new Float32Array(dustCount*3);
+  const spiceColArr = [[0.91,0.63,0.13],[0.75,0.24,0.17],[0.18,0.42,0.18],[0.54,0.27,0.07],[0.88,0.73,0.10]];
+  for(let i=0;i<dustCount;i++){
+    dustPos[i*3]=(Math.random()-0.5)*16;
+    dustPos[i*3+1]=(Math.random()-0.5)*8;
+    dustPos[i*3+2]=(Math.random()-0.5)*6-1;
+    const c=spiceColArr[Math.floor(Math.random()*spiceColArr.length)];
+    dustCol[i*3]=c[0];dustCol[i*3+1]=c[1];dustCol[i*3+2]=c[2];
+  }
+  const dustGeo = new THREE.BufferGeometry();
+  dustGeo.setAttribute('position',new THREE.BufferAttribute(dustPos,3));
+  dustGeo.setAttribute('color',new THREE.BufferAttribute(dustCol,3));
+  scene.add(new THREE.Points(dustGeo, new THREE.PointsMaterial({size:0.04,vertexColors:true,transparent:true,opacity:0.35})));
+
+  let mouseX=0, mouseY=0;
+  document.addEventListener('mousemove',e=>{mouseX=(e.clientX/window.innerWidth-0.5);mouseY=-(e.clientY/window.innerHeight-0.5)});
+
+  const clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    jarMeshes.forEach(g=>{
+      const u = g.userData;
+      g.position.y = u.baseY + Math.sin(t*u.floatSpeed + u.floatOffset)*u.floatAmp;
+      g.rotation.y = u.rotBase + mouseX*0.3 + Math.sin(t*0.2+u.floatOffset)*0.04;
+    });
+    // Dust drift
+    const dp = dustGeo.attributes.position.array;
+    for(let i=0;i<dustCount;i++){dp[i*3+1]+=0.003;if(dp[i*3+1]>4)dp[i*3+1]=-4;}
+    dustGeo.attributes.position.needsUpdate=true;
+    camera.position.x += (mouseX*0.6 - camera.position.x)*0.04;
+    camera.position.y += (mouseY*0.3 + 0.5 - camera.position.y)*0.04;
+    camera.lookAt(0, 0, 0);
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize',()=>{
+    const W=window.innerWidth, H=window.innerHeight;
+    camera.aspect=W/H; camera.updateProjectionMatrix();
+    renderer.setSize(W,H);
+  });
+})();
+
+// =================== NAV + SCROLL ===================
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY;
+  document.getElementById('navbar').classList.toggle('scrolled',s>60);
+  document.getElementById('backTop').classList.toggle('visible',s>400);
+});
+
+function toggleMenu(){
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.body.style.overflow=document.getElementById('mobileMenu').classList.contains('open')?'hidden':'';
+}
+
+// =================== PRODUCTS ===================
+const products=[
+  {id:1,name:"Turmeric Powder",origin:"Uganda",img:"https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=600&auto=format&fit=crop&q=80",category:"spice",badge:"Bestseller",desc:"Vibrant golden turmeric with high curcumin content. Earthy, warm and slightly bitter. Perfect for curries, soups and golden milk.",flavor:"Earthy, Warm, Bitter",heat:"None",harvest:"2024",pairing:"Cumin, Coriander, Ginger",sizes:[{label:"50g",price:250},{label:"100g",price:450},{label:"250g",price:950}]},
+  {id:2,name:"Ceylon Cinnamon",origin:"Sri Lanka",img:"https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=600&auto=format&fit=crop&q=80",category:"spice",badge:"Premium",desc:"True Ceylon cinnamon — delicate, sweet and complex. Far superior to cassia. Ideal for teas, baking and slow-cooked dishes.",flavor:"Sweet, Floral, Delicate",heat:"None",harvest:"2024",pairing:"Cardamom, Cloves, Nutmeg",sizes:[{label:"50g",price:350},{label:"100g",price:650},{label:"200g",price:1200}]},
+  {id:3,name:"Green Cardamom",origin:"Guatemala",img:"https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=600&auto=format&fit=crop&q=80",category:"spice",badge:null,desc:"Fragrant pods with a complex eucalyptus-like aroma. Essential for chai, biryanis and Middle Eastern sweets.",flavor:"Floral, Citrus, Eucalyptus",heat:"Mild",harvest:"2023",pairing:"Cinnamon, Rose, Saffron",sizes:[{label:"25g",price:300},{label:"50g",price:550},{label:"100g",price:1000}]},
+  {id:4,name:"Smoked Paprika",origin:"Spain",img:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&auto=format&fit=crop&q=80",category:"spice",badge:null,desc:"Deep red with a rich smoky sweetness. Perfect for stews, spice rubs and roasted vegetables.",flavor:"Smoky, Sweet, Rich",heat:"Mild-Medium",harvest:"2024",pairing:"Garlic, Cumin, Oregano",sizes:[{label:"50g",price:280},{label:"100g",price:520},{label:"250g",price:1100}]},
+  {id:5,name:"Whole Cumin Seeds",origin:"India",img:"https://images.unsplash.com/photo-1612197527762-8cfb4b634a24?w=600&auto=format&fit=crop&q=80",category:"spice",badge:null,desc:"Nutty, warm and slightly bitter whole seeds. Toast them first for maximum flavour release in any dish.",flavor:"Nutty, Warm, Earthy",heat:"None",harvest:"2024",pairing:"Coriander, Turmeric, Chili",sizes:[{label:"100g",price:200},{label:"250g",price:450},{label:"500g",price:800}]},
+  {id:6,name:"Fresh Rosemary",origin:"Kenya",img:"https://images.unsplash.com/photo-1515586000433-45406d8e6662?w=600&auto=format&fit=crop&q=80",category:"herb",badge:"Local",desc:"Locally grown, fresh-dried rosemary. Piney and aromatic — ideal for roasts, bread and marinades.",flavor:"Piney, Resinous, Herbal",heat:"None",harvest:"2024",pairing:"Thyme, Garlic, Lemon",sizes:[{label:"20g",price:180},{label:"50g",price:380},{label:"100g",price:680}]},
+  {id:7,name:"Ras el Hanout",origin:"Morocco",img:"https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=600&auto=format&fit=crop&q=80",category:"blend",badge:"Popular",desc:"Our signature blend of 12 spices. Deeply complex, warming and utterly irresistible on lamb and couscous.",flavor:"Complex, Warm, Aromatic",heat:"Medium",harvest:"2024",pairing:"Lamb, Couscous, Chickpeas",sizes:[{label:"50g",price:420},{label:"100g",price:780},{label:"200g",price:1400}]},
+  {id:8,name:"BBQ Spice Set",origin:"Various",img:"https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format&fit=crop&q=80",category:"gift",badge:"Gift",desc:"5 essential BBQ spices beautifully gift-wrapped: Smoked Paprika, Garlic Powder, Cumin, Black Pepper & Chili Flakes.",flavor:"Smoky, Bold, Savory",heat:"Medium",harvest:"2024",pairing:"Meat, Corn, Potatoes",sizes:[{label:"Set of 5",price:1800}]},
+];
+
+let cart=[],currentProduct=null,currentSizeIdx=0,activeCategory='all';
+
+function renderProducts(data){
+  const g=document.getElementById('productsGrid');
+  g.innerHTML=data.length?data.map(p=>`
+    <div class="product-card" onclick="openModal(${p.id})">
+      <div class="product-img-wrap">
+        <img class="product-img-real" src="${p.img}" alt="${p.name}" loading="lazy">
+        ${p.badge?`<div class="product-badge">${p.badge}</div>`:''}
+      </div>
+      <div class="product-info">
+        <p class="product-origin">${p.origin}</p>
+        <h3 class="product-name">${p.name}</h3>
+        <p class="product-desc">${p.desc.substring(0,85)}...</p>
+        <div class="product-meta">
+          <span class="product-tag">${p.flavor.split(',')[0].trim()}</span>
+          ${p.heat!=='None'?`<span class="product-tag">🌶 ${p.heat}</span>`:''}
+        </div>
+        <div class="product-footer">
+          <div class="product-price">KSh ${p.sizes[0].price} <span>/ ${p.sizes[0].label}</span></div>
+          <button class="add-btn" onclick="event.stopPropagation();quickAdd(${p.id})">+ Add</button>
+        </div>
+      </div>
+    </div>`).join(''):'<p style="color:var(--text-muted);font-size:14px;padding:40px 0;grid-column:1/-1">No spices found.</p>';
+}
+
+function filterProducts(cat,btn){
+  activeCategory=cat;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  renderProducts(products.filter(p=>(cat==='all'||p.category===cat)&&matches(p,q)));
+}
+function searchProducts(){const q=document.getElementById('searchInput').value.toLowerCase();renderProducts(products.filter(p=>(activeCategory==='all'||p.category===activeCategory)&&matches(p,q)));}
+function matches(p,q){return p.name.toLowerCase().includes(q)||p.origin.toLowerCase().includes(q)||p.flavor.toLowerCase().includes(q);}
+
+function openModal(id){
+  currentProduct=products.find(p=>p.id===id); currentSizeIdx=0;
+  const p=currentProduct;
+  document.getElementById('modalImg').src=p.img;
+  document.getElementById('modalImg').alt=p.name;
+  document.getElementById('modalOrigin').textContent=p.origin.toUpperCase();
+  document.getElementById('modalName').textContent=p.name;
+  document.getElementById('modalDesc').textContent=p.desc;
+  document.getElementById('modalAttrs').innerHTML=[['Flavor Profile',p.flavor],['Heat Level',p.heat],['Harvest',p.harvest],['Pairs With',p.pairing]].map(([l,v])=>`<div class="modal-attr"><span class="modal-attr-label">${l}</span><span class="modal-attr-value">${v}</span></div>`).join('');
+  document.getElementById('sizeOptions').innerHTML=p.sizes.map((s,i)=>`<button class="size-btn ${i===0?'active':''}" onclick="selectSize(${i},this)">${s.label}</button>`).join('');
+  updateModalPrice();
+  document.getElementById('modalAddBtn').onclick=()=>addToCart(p,currentSizeIdx);
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function selectSize(idx,btn){currentSizeIdx=idx;document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');updateModalPrice();}
+function updateModalPrice(){document.getElementById('modalPrice').textContent=`KSh ${currentProduct.sizes[currentSizeIdx].price}`;}
+function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeModalDirect();}
+function closeModalDirect(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+
+function addToCart(product,sizeIdx){
+  const size=product.sizes[sizeIdx];
+  const ex=cart.find(i=>i.id===product.id&&i.size===size.label);
+  if(ex)ex.qty++;else cart.push({id:product.id,name:product.name,img:product.img,size:size.label,price:size.price,qty:1});
+  updateCart(); showToast(`${product.name} (${size.label}) added!`); closeModalDirect();
+}
+function quickAdd(id){
+  const p=products.find(x=>x.id===id);const size=p.sizes[0];
+  const ex=cart.find(i=>i.id===id&&i.size===size.label);
+  if(ex)ex.qty++;else cart.push({id,name:p.name,img:p.img,size:size.label,price:size.price,qty:1});
+  updateCart(); showToast(`${p.name} added!`);
+}
+function removeFromCart(idx){cart.splice(idx,1);updateCart();}
+function updateCart(){
+  const count=cart.reduce((s,i)=>s+i.qty,0);
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cartBadge').textContent=count;
+  document.getElementById('cartTotal').textContent=`KSh ${total.toLocaleString()}`;
+  const el=document.getElementById('cartItems');
+  if(!cart.length){el.innerHTML='<div class="cart-empty">Your cart is empty<br><br>Add some spices to get started!</div>';return;}
+  el.innerHTML=cart.map((item,idx)=>`
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.img}" alt="${item.name}" onerror="this.style.display='none'">
+      <div class="cart-item-details">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-size">${item.size} × ${item.qty}</div>
+        <div class="cart-item-price">KSh ${(item.price*item.qty).toLocaleString()}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${idx})">✕</button>
+    </div>`).join('');
+}
+function toggleCart(){document.getElementById('cartSidebar').classList.toggle('open');}
+function checkout(){showToast('Contact us on WhatsApp to complete your order!');}
+
+// =================== HOW TO USE ===================
+const howtoData=[
+  {label:"Toasting Spices",title:"The Art of Toasting",sub:"Unlock deeper flavour",body:"Toasting whole spices in a dry pan unlocks essential oils that transform their flavour. Heat a heavy pan over medium heat. Add whole spices in a single layer and shake gently for 1–3 minutes until fragrant. Never walk away — they can burn in seconds. Transfer to a cool plate immediately. Grind once cooled for the freshest possible flavour.",heroImg:"https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=900&auto=format&fit=crop&q=80",recipes:[{img:"https://images.unsplash.com/photo-1546549032-9571cd6b27df?w=400&auto=format&fit=crop&q=80",name:"Toasted Cumin Dal",time:"30 min"},{img:"https://images.unsplash.com/photo-1547592180-85f173990554?w=400&auto=format&fit=crop&q=80",name:"Spiced Lamb Stew",time:"2 hrs"}],pairings:["Cumin + Coriander","Cardamom + Cinnamon","Mustard + Fenugreek"]},
+  {label:"Building Flavour",title:"Layering Your Spices",sub:"The three-stage method",body:"Great spiced dishes are built in layers. Start with whole spices in hot oil — they'll sizzle and bloom. Add ground spices mid-cook and let them cook out for 2 minutes. Finish with fresh herbs off the heat to preserve their brightness. This three-stage approach is the foundation of Indian, Middle Eastern and East African cuisine.",heroImg:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=900&auto=format&fit=crop&q=80",recipes:[{img:"https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&auto=format&fit=crop&q=80",name:"Kenyan Pilau",time:"1 hr"},{img:"https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=400&auto=format&fit=crop&q=80",name:"Vegetable Biryani",time:"90 min"}],pairings:["Whole → Ground → Fresh","Dry → Bloom → Braise"]},
+  {label:"Storage Tips",title:"Keep Spices Fresh",sub:"Shelf life guide",body:"Whole spices stay fresh for 3–4 years; ground spices for 1–2 years. Store in airtight containers away from heat, light and moisture. A cool dark drawer extends life dramatically. Buy in smaller quantities more often for maximum freshness. Do the smell test: if it doesn't smell like much, it won't taste like much.",heroImg:"https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=900&auto=format&fit=crop&q=80",recipes:[{img:"https://images.unsplash.com/photo-1612197527762-8cfb4b634a24?w=400&auto=format&fit=crop&q=80",name:"Freshness Test Guide",time:"5 min read"},{img:"https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=400&auto=format&fit=crop&q=80",name:"Refresh Stale Spices",time:"10 min"}],pairings:["Airtight jars","Away from heat","Whole lasts longer"]},
+  {label:"Spice Pairings",title:"Perfect Pairings",sub:"What goes with what",body:"Understanding which spices complement each other is the secret to confident cooking. Warm spices like cinnamon and cardamom harmonize in both sweet and savoury dishes. Earthy spices — cumin, coriander, turmeric — form the backbone of most curry bases. When in doubt: spices from the same cuisine almost always work together.",heroImg:"https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=900&auto=format&fit=crop&q=80",recipes:[{img:"https://images.unsplash.com/photo-1515586000433-45406d8e6662?w=400&auto=format&fit=crop&q=80",name:"Spiced Chai Masala",time:"15 min"},{img:"https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&auto=format&fit=crop&q=80",name:"Slow-Roast Chicken",time:"3 hrs"}],pairings:["Cumin + Turmeric + Coriander","Cinnamon + Cardamom + Cloves","Paprika + Garlic + Oregano"]},
+];
+
+function renderHowto(){
+  document.getElementById('howtoNav').innerHTML=howtoData.map((h,i)=>`<div class="howto-nav-item ${i===0?'active':''}" onclick="showHowto(${i},this)"><div class="hwn-num">0${i+1}</div><span class="hwn-label">${h.label}</span></div>`).join('');
+  document.getElementById('howtoContent').innerHTML=howtoData.map((h,i)=>`
+    <div class="how-article ${i===0?'active':''}" id="how-${i}">
+      <img class="how-hero-img" src="${h.heroImg}" alt="${h.title}" loading="lazy">
+      <p class="how-sub">${h.sub}</p><h3 class="how-title">${h.title}</h3><p class="how-body">${h.body}</p>
+      <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px">Recipes to Try</div>
+      <div class="recipe-grid">${h.recipes.map(r=>`<div class="recipe-card"><img class="recipe-img" src="${r.img}" alt="${r.name}" loading="lazy"><div class="recipe-overlay"><div class="recipe-name">${r.name}</div><div class="recipe-time">${r.time}</div></div></div>`).join('')}</div>
+      <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin:24px 0 12px">Pairings</div>
+      <div class="pairing-row">${h.pairings.map(p=>`<span class="pairing-chip">${p}</span>`).join('')}</div>
+    </div>`).join('');
+}
+function showHowto(idx,el){
+  document.querySelectorAll('.howto-nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.how-article').forEach(a=>a.classList.remove('active'));
+  el.classList.add('active'); document.getElementById(`how-${idx}`).classList.add('active');
+}
+
+// =================== REVIEWS ===================
+const reviews=[
+  {name:"Amina K.",location:"Westlands, Nairobi",stars:5,text:"The turmeric is unlike anything I've bought before. The colour and aroma are so vivid — you can immediately tell it's pure and fresh. My curries have never been better!"},
+  {name:"Brian O.",location:"Karen, Nairobi",stars:5,text:"Ordered the BBQ gift set for my dad's birthday. He absolutely loved it. The smoked paprika alone is worth the price. Fast delivery to Karen too!"},
+  {name:"Fatuma M.",location:"Mombasa",stars:5,text:"I've always struggled to find real Ceylon cinnamon. Savora's is the genuine thing — so delicate and fragrant. My chai has been transformed. Will reorder soon."},
+  {name:"David N.",location:"Kileleshwa, Nairobi",stars:4,text:"The Ras el Hanout blend is incredible. Complex and warming. I used it on lamb chops and my whole family was asking where I got it. Highly recommend."},
+  {name:"Grace W.",location:"Thika",stars:5,text:"What I love most is knowing there are no fillers or chemicals. Pure spices the way my grandmother used to use. Delivery to Thika was faster than expected!"},
+  {name:"James K.",location:"Kilimani, Nairobi",stars:5,text:"I bought the rosemary and cardamom. Both are beautifully packaged and smell absolutely fresh. The website made it so easy to understand how to use each one."},
+];
+
+function renderReviews(){
+  document.getElementById('reviewsGrid').innerHTML=reviews.map(r=>`
+    <div class="review-card">
+      <div class="review-stars">${[1,2,3,4,5].map(s=>`<span class="star ${s<=r.stars?'':'empty'}">★</span>`).join('')}</div>
+      <p class="review-text">${r.text}</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">${r.name[0]}</div>
+        <div><div class="reviewer-name">${r.name}</div><div class="reviewer-location">${r.location}</div></div>
+      </div>
+    </div>`).join('');
+}
+
+// =================== SPICE QUIZ ===================
+const quizData=[
+  {q:"What are you cooking tonight?",opts:["A rich curry or stew","Grilled meat or BBQ","Baked goods or tea","A fresh salad or soup"]},
+  {q:"What flavour mood are you in?",opts:["Warm & earthy","Bold & smoky","Sweet & aromatic","Light & herby"]},
+  {q:"How adventurous are you feeling?",opts:["Give me something classic","I love bold flavours","Something exotic please","Keep it simple & safe"]},
+];
+const quizResults=[
+  {emoji:"🌿",spice:"Turmeric",desc:"Golden, earthy and deeply nourishing. Turmeric will bring warmth and colour to your dish tonight. Try it in a curry base with cumin and coriander.",id:1},
+  {emoji:"🌶️",spice:"Smoked Paprika",desc:"Bold, deep and gloriously smoky. Smoked Paprika is your perfect match — ideal for rubbing on meat or adding depth to any dish.",id:4},
+  {emoji:"🫛",spice:"Cardamom",desc:"Exotic, floral and wonderfully complex. Green Cardamom will elevate your baking or chai tea into something truly special.",id:3},
+  {emoji:"🪵",spice:"Cinnamon",desc:"Warm, sweet and universally loved. Ceylon Cinnamon is the most versatile spice in our collection — perfect for anything tonight.",id:2},
+];
+let quizAnswers=[];
+
+function renderQuiz(){
+  const prog=document.getElementById('quizProgress');
+  prog.innerHTML=quizData.map((_,i)=>`<div class="quiz-dot" id="qdot-${i}"></div>`).join('');
+  const steps=document.getElementById('quizSteps');
+  steps.innerHTML=quizData.map((q,i)=>`
+    <div class="quiz-step ${i===0?'active':''}" id="qstep-${i}">
+      <div class="quiz-q">${q.q}</div>
+      <div class="quiz-options">${q.opts.map((o,j)=>`<button class="quiz-opt" onclick="selectOpt(${i},${j},this)">${o}</button>`).join('')}</div>
+    </div>`).join('')+`<div class="quiz-step" id="qstep-result">
+      <div class="quiz-result" id="quizResult"></div>
+      <button class="quiz-restart" onclick="restartQuiz()" style="margin-top:20px">↺ Try Again</button>
+    </div>`;
+  document.getElementById('qdot-0').classList.add('active');
+}
+
+function selectOpt(stepIdx,optIdx,btn){
+  document.querySelectorAll(`#qstep-${stepIdx} .quiz-opt`).forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  quizAnswers[stepIdx]=optIdx;
+  setTimeout(()=>{
+    document.getElementById(`qstep-${stepIdx}`).classList.remove('active');
+    if(stepIdx<quizData.length-1){
+      document.getElementById(`qstep-${stepIdx+1}`).classList.add('active');
+      document.getElementById(`qdot-${stepIdx+1}`).classList.add('active');
+    } else {
+      showQuizResult();
+    }
+  },400);
+}
+
+function showQuizResult(){
+  const r=quizResults[quizAnswers[0]||0];
+  document.getElementById('qstep-result').classList.add('active');
+  document.getElementById('quizResult').innerHTML=`
+    <div class="quiz-result-emoji">${r.emoji}</div>
+    <div class="quiz-result-spice">${r.spice}</div>
+    <p class="quiz-result-desc">${r.desc}</p>
+    <button class="btn-amber" onclick="openModal(${r.id});closeModalDirect();" style="margin-bottom:0">Shop ${r.spice} →</button>`;
+}
+
+function restartQuiz(){
+  quizAnswers=[];
+  document.querySelectorAll('.quiz-step').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.quiz-dot').forEach(d=>d.classList.remove('active'));
+  document.getElementById('qstep-0').classList.add('active');
+  document.getElementById('qdot-0').classList.add('active');
+  document.querySelectorAll('.quiz-opt').forEach(b=>b.classList.remove('selected'));
+}
+
+// =================== FAQ ===================
+const faqs=[
+  {q:"How long do your spices stay fresh?",a:"Whole spices last 3–4 years, ground spices 1–2 years when stored properly in airtight containers away from heat and light. We print harvest dates on all our products so you always know how fresh your spice is."},
+  {q:"Do you use any fillers, anti-caking agents or preservatives?",a:"Never. Savora Spices are 100% pure with nothing added. No anti-caking agents, no artificial colours, no fillers. What's on the label is exactly and only what's in the jar."},
+  {q:"Whole vs ground — which should I buy?",a:"Whole spices stay fresh longer and give you more control over grind size. Ground spices are convenient and ready to use. For everyday cooking, ground is perfect. For maximum flavour intensity and longer shelf life, go whole and grind as needed."},
+  {q:"Do you deliver across Kenya?",a:"Yes! We deliver across Nairobi same-day or next-day, and to other major Kenyan cities within 2–3 business days. Delivery fees vary by location. Contact us on WhatsApp for remote areas."},
+  {q:"Will heat affect my spices during delivery?",a:"We use insulated packaging to protect your spices during delivery. Ground spices are sealed immediately after grinding to preserve freshness. Store in a cool dark place as soon as they arrive."},
+  {q:"Can I return or exchange spices?",a:"Because spices are a food product, we cannot accept returns for hygiene reasons. However if your order arrives damaged or incorrect, we will replace it immediately — no questions asked."},
+];
+
+function renderFAQ(){
+  document.getElementById('faqList').innerHTML=faqs.map((f,i)=>`
+    <div class="faq-item" id="faq-${i}">
+      <button class="faq-q" onclick="toggleFaq(${i})">${f.q}<span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>${f.a}</p></div>
+    </div>`).join('');
+}
+function toggleFaq(i){const item=document.getElementById(`faq-${i}`);const was=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!was)item.classList.add('open');}
+
+function joinWaitlist(){
+  const e=document.getElementById('premiumEmail').value;
+  if(!e||!e.includes('@')){showToast('Please enter a valid email.');return;}
+  showToast("You're on the waitlist! We'll notify you when Premium launches.");
+  document.getElementById('premiumEmail').value='';
+}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+
+// =================== INIT ===================
+renderProducts(products);
+renderHowto();
+renderReviews();
+renderQuiz();
+renderFAQ();
+updateCart();
+</script>
+</body>
+</html>
