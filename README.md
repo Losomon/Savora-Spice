@@ -1,4 +1,4 @@
-# Savora Spice (Static Site)
+https://github.com/Losomon/Savora-Spice.git# Savora Spice (Static Site)
 
 Savora Spice is a static, single-page storefront experience (HTML/CSS/JS). This repo contains the main production assets under `frontend/` and an additional standalone landing page `in.html`.
 
