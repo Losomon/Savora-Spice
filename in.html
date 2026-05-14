@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savora Spices – Natural Flavor. Pure Goodness.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1a5c2a;
+    --forest-dark: #0f3a1a;
+    --forest-light: #2d7a3e;
+    --brown: #7a4a1e;
+    --brown-light: #a0622a;
+    --gold: #c8932a;
+    --cream: #fdf8f0;
+    --cream-dark: #f5ede0;
+    --text: #1e1e1e;
+    --text-muted: #5a5a5a;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 4rem;
+    background: rgba(253, 248, 240, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(122, 74, 30, 0.15);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .nav-logo img {
+    height: 52px; width: 52px; object-fit: contain;
+  }
+  .nav-logo span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--forest-dark);
+    letter-spacing: 0.02em;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--forest); }
+  .nav-cta {
+    background: var(--forest);
+    color: var(--white) !important;
+    padding: 0.6rem 1.5rem;
+    border-radius: 2px;
+  }
+  .nav-cta:hover { background: var(--forest-light); color: var(--white) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(26, 92, 42, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-text { max-width: 560px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; display: block;
+    width: 32px; height: 1px;
+    background: var(--gold);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    color: var(--forest-dark);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--brown);
+  }
+  .hero-desc {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    max-width: 440px;
+  }
+  .hero-actions {
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .btn-primary {
+    background: var(--forest);
+    color: var(--white);
+    text-decoration: none;
+    padding: 1rem 2.2rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--forest-light); transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--brown);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1.5px solid var(--brown);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--brown-light); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem;
+    margin-top: 3.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(122, 74, 30, 0.2);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--forest);
+    font-weight: 700;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.2rem;
+  }
+
+  .hero-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .hero-circle {
+    width: 440px; height: 440px;
+    border-radius: 50%;
+    background: var(--cream-dark);
+    border: 2px solid rgba(200, 147, 42, 0.25);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .hero-circle::before {
+    content: '';
+    position: absolute; inset: 12px;
+    border-radius: 50%;
+    border: 1px dashed rgba(200, 147, 42, 0.3);
+  }
+  .hero-logo-large {
+    width: 340px; height: 340px;
+    object-fit: contain;
+    animation: gentleFloat 5s ease-in-out infinite;
+  }
+  @keyframes gentleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* ── MARQUEE STRIP ── */
+  .marquee-strip {
+    background: var(--forest-dark);
+    padding: 1rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-flex;
+    animation: marqueeScroll 25s linear infinite;
+  }
+  .marquee-item {
+    color: rgba(253, 248, 240, 0.7);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0 2.5rem;
+  }
+  .marquee-dot {
+    color: var(--gold);
+    font-size: 1.2rem;
+    vertical-align: middle;
+  }
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .section-label::before {
+    content: ''; display: block;
+    width: 28px; height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    color: var(--forest-dark);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  /* ── CATEGORIES ── */
+  .categories { background: var(--white); }
+  .categories-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3.5rem;
+  }
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .category-card {
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+    position: relative;
+  }
+  .category-card:hover { transform: translateY(-6px); }
+  .category-bg {
+    height: 260px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    position: relative;
+  }
+  .category-bg.green { background: #e8f4e8; }
+  .category-bg.amber { background: #faf0e0; }
+  .category-bg.red { background: #faeae8; }
+  .category-bg.brown { background: #f5ede0; }
+  .category-emoji {
+    font-size: 5rem;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12));
+    transition: transform 0.3s;
+  }
+  .category-card:hover .category-emoji { transform: scale(1.1); }
+  .category-info {
+    background: var(--cream);
+    padding: 1.2rem 1.5rem;
+    border-top: 2px solid var(--gold);
+  }
+  .category-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--forest-dark);
+    margin-bottom: 0.25rem;
+  }
+  .category-count {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── FEATURED PRODUCTS ── */
+  .products { background: var(--cream); }
+  .products-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .products-header .section-label { justify-content: center; }
+  .products-header .section-label::before { display: none; }
+  .products-header .section-label::after {
+    content: ''; display: block;
+    width: 28px; height: 1px;
+    background: var(--gold);
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .product-card {
+    background: var(--white);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(122, 74, 30, 0.12);
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .product-card:hover {
+    box-shadow: 0 12px 40px rgba(26, 92, 42, 0.1);
+    transform: translateY(-4px);
+  }
+  .product-img {
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+    background: var(--cream-dark);
+    position: relative;
+  }
+  .product-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    background: var(--forest);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 2px;
+  }
+  .product-body { padding: 1.5rem; }
+  .product-origin {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--forest-dark);
+    margin-bottom: 0.5rem;
+  }
+  .product-desc {
+    font-size: 0.87rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+  .product-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(122, 74, 30, 0.1);
+    padding-top: 1rem;
+  }
+  .product-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--brown);
+    font-weight: 700;
+  }
+  .add-btn {
+    background: var(--forest);
+    color: var(--white);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .add-btn:hover { background: var(--forest-light); }
+
+  /* ── STORY STRIP ── */
+  .story {
+    background: var(--forest-dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+    min-height: 500px;
+  }
+  .story-visual {
+    background: var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    padding: 5rem 4rem;
+    font-size: 8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .story-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='20' cy='20' r='2'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .story-text {
+    padding: 5rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .story-text .section-label { color: rgba(200, 147, 42, 0.9); }
+  .story-text .section-label::before { background: rgba(200, 147, 42, 0.9); }
+  .story-text .section-title { color: var(--cream); }
+  .story-text .section-subtitle { color: rgba(253, 248, 240, 0.65); max-width: 100%; margin-bottom: 2rem; }
+  .story-text .btn-primary { align-self: flex-start; background: var(--gold); }
+  .story-text .btn-primary:hover { background: var(--brown-light); }
+
+  /* ── PROCESS ── */
+  .process { background: var(--cream-dark); text-align: center; }
+  .process-header { margin-bottom: 4rem; }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 2.2rem; left: 12.5%; right: 12.5%;
+    height: 1px; background: rgba(200, 147, 42, 0.3);
+  }
+  .process-step { padding: 0 1rem; }
+  .step-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid rgba(200, 147, 42, 0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1.5rem;
+    position: relative; z-index: 1;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .process-step:hover .step-icon {
+    background: var(--forest);
+    border-color: var(--forest);
+  }
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--forest-dark);
+    margin-bottom: 0.5rem;
+  }
+  .step-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--white); }
+  .testimonials-header { margin-bottom: 3.5rem; }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .testimonial-card {
+    background: var(--cream);
+    border-radius: 4px;
+    padding: 2rem;
+    border-left: 3px solid var(--gold);
+    position: relative;
+  }
+  .testimonial-card::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: rgba(200, 147, 42, 0.2);
+    position: absolute;
+    top: -0.5rem; left: 1.5rem;
+    line-height: 1;
+  }
+  .testimonial-text {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+  }
+  .testimonial-author {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .author-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--forest-dark);
+  }
+  .author-role {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  .stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 0.75rem; }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    background: var(--forest-dark);
+    padding: 5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-banner::before {
+    content: '🌿';
+    position: absolute; left: 4rem; top: 50%; transform: translateY(-50%);
+    font-size: 8rem; opacity: 0.08;
+  }
+  .cta-banner::after {
+    content: '🌶️';
+    position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+    font-size: 8rem; opacity: 0.08;
+  }
+  .cta-banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  .cta-banner p {
+    color: rgba(253, 248, 240, 0.65);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .cta-form {
+    display: flex; justify-content: center; gap: 0;
+    max-width: 460px; margin: 0 auto;
+  }
+  .cta-form input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: none;
+    background: rgba(253, 248, 240, 0.12);
+    color: var(--cream);
+    font-size: 0.9rem;
+    border-radius: 2px 0 0 2px;
+    outline: none;
+  }
+  .cta-form input::placeholder { color: rgba(253, 248, 240, 0.4); }
+  .cta-form button {
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 0 2px 2px 0;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .cta-form button:hover { background: var(--brown-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0a2410;
+    color: rgba(253, 248, 240, 0.6);
+    padding: 4rem 4rem 2rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand p {
+    font-size: 0.87rem;
+    line-height: 1.7;
+    margin-top: 1rem;
+    font-weight: 300;
+  }
+  .footer-brand .tagline {
+    font-style: italic;
+    color: var(--gold);
+    font-size: 0.82rem;
+    margin-top: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+  .footer-col h4 {
+    color: var(--cream);
+    font-size: 0.82rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.6rem; }
+  .footer-col a {
+    color: rgba(253, 248, 240, 0.55);
+    text-decoration: none;
+    font-size: 0.87rem;
+    transition: color 0.2s;
+    font-weight: 300;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid rgba(253, 248, 240, 0.08);
+    padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 0.78rem; }
+  .footer-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--cream);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-text > * {
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-text > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-text > *:nth-child(2) { animation-delay: 0.25s; }
+  .hero-text > *:nth-child(3) { animation-delay: 0.4s; }
+  .hero-text > *:nth-child(4) { animation-delay: 0.55s; }
+  .hero-text > *:nth-child(5) { animation-delay: 0.7s; }
+  .hero-visual {
+    animation: fadeUp 0.9s ease 0.3s both;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="/mnt/user-data/uploads/WhatsApp_Image_2026-05-11_at_12_52_59_PM.jpeg" alt="Savora Spices Logo">
+    <span>Savora Spices</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#categories">Shop</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#process">Quality</a></li>
+    <li><a href="#" class="nav-cta">Order Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Natural Flavor. Pure Goodness.</div>
+    <h1>Spices That<br>Tell a <em>Story</em></h1>
+    <p class="hero-desc">From sun-drenched fields to your kitchen — Savora brings you the world's finest herbs, blends, and spices, sourced with care and bursting with flavour.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Shop All Spices</a>
+      <a href="#story" class="btn-ghost">Our Journey</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">80+</div>
+        <div class="stat-label">Spice Varieties</div>
+      </div>
+      <div>
+        <div class="stat-num">12</div>
+        <div class="stat-label">Countries Sourced</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">All Natural</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-circle">
+      <img class="hero-logo-large" src="/mnt/user-data/uploads/WhatsApp_Image_2026-05-11_at_12_52_59_PM.jpeg" alt="Savora Spices">
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">Turmeric <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Cinnamon <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Cardamom <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Cumin <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Star Anise <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Paprika <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Cloves <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Ginger <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Black Pepper <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Coriander <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Turmeric <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Cinnamon <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Cardamom <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Cumin <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Star Anise <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Paprika <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Cloves <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Ginger <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Black Pepper <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">Coriander <span class="marquee-dot">·</span></span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="categories-header">
+    <div>
+      <div class="section-label">Browse</div>
+      <h2 class="section-title">Shop by Category</h2>
+      <p class="section-subtitle">Explore our curated range of single-origin spices, artisan blends, and aromatic herbs.</p>
+    </div>
+    <a href="#" class="btn-ghost">View All</a>
+  </div>
+  <div class="category-grid">
+    <div class="category-card">
+      <div class="category-bg amber"><span class="category-emoji">🫚</span></div>
+      <div class="category-info">
+        <div class="category-name">Blends & Rubs</div>
+        <div class="category-count">24 Products</div>
+      </div>
+    </div>
+    <div class="category-card">
+      <div class="category-bg red"><span class="category-emoji">🌶️</span></div>
+      <div class="category-info">
+        <div class="category-name">Chillies & Peppers</div>
+        <div class="category-count">18 Products</div>
+      </div>
+    </div>
+    <div class="category-card">
+      <div class="category-bg green"><span class="category-emoji">🌿</span></div>
+      <div class="category-info">
+        <div class="category-name">Herbs & Leaves</div>
+        <div class="category-count">21 Products</div>
+      </div>
+    </div>
+    <div class="category-card">
+      <div class="category-bg brown"><span class="category-emoji">🫙</span></div>
+      <div class="category-info">
+        <div class="category-name">Gift Sets</div>
+        <div class="category-count">9 Products</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="products-header">
+    <div class="section-label">Best Sellers</div>
+    <h2 class="section-title">Customer Favourites</h2>
+    <p class="section-subtitle" style="margin: 0 auto;">Hand-picked, globally sourced, and loved by home cooks and professional chefs alike.</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-img">
+        <span class="product-badge">Best Seller</span>
+        <span style="font-size:5rem">🫚</span>
+      </div>
+      <div class="product-body">
+        <div class="product-origin">India · Single Origin</div>
+        <div class="product-name">Highland Turmeric Powder</div>
+        <p class="product-desc">Rich, earthy, and brilliantly golden. Our turmeric is grown at altitude for maximum curcumin content.</p>
+        <div class="product-footer">
+          <div class="product-price">Ksh 450</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <span class="product-badge">New Arrival</span>
+        <span style="font-size:5rem">🌿</span>
+      </div>
+      <div class="product-body">
+        <div class="product-origin">Sri Lanka · Premium Grade</div>
+        <div class="product-name">True Ceylon Cinnamon</div>
+        <p class="product-desc">Delicate, sweet, and complex — the world's finest cinnamon, distinct from cassia in every way.</p>
+        <div class="product-footer">
+          <div class="product-price">Ksh 380</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <span style="font-size:5rem">🌶️</span>
+      </div>
+      <div class="product-body">
+        <div class="product-origin">Ethiopia · Smoky Blend</div>
+        <div class="product-name">Berbere Spice Blend</div>
+        <p class="product-desc">A bold East African blend of chilli, fenugreek, and warming spices — the soul of Ethiopian cooking.</p>
+        <div class="product-footer">
+          <div class="product-price">Ksh 520</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:3rem">
+    <a href="#" class="btn-primary">View All Products</a>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="story-visual">
+    <span style="font-size:7rem; position:relative; z-index:1">🌍</span>
+  </div>
+  <div class="story-text">
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title">Sourced From<br>Around the World</h2>
+    <p class="section-subtitle">Savora was born from a belief that food is better when it's honest. We travel to farms, co-operatives, and growing regions to source spices at peak freshness — then bring them directly to your kitchen.</p>
+    <a href="#" class="btn-primary">Read Our Story</a>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="process-header">
+    <div class="section-label" style="justify-content:center">Our Promise</div>
+    <h2 class="section-title">From Field to Your Table</h2>
+    <p class="section-subtitle" style="margin: 0 auto;">Every jar of Savora goes through a meticulous journey before it reaches you.</p>
+  </div>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-icon">🌱</div>
+      <div class="step-title">Sustainably Grown</div>
+      <p class="step-desc">Partnering with ethical farms that respect the land and the farmers who tend it.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-icon">✋</div>
+      <div class="step-title">Hand Selected</div>
+      <p class="step-desc">Only the finest produce makes it through our quality checks — no compromises.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-icon">🔬</div>
+      <div class="step-title">Lab Tested</div>
+      <p class="step-desc">Every batch is tested for purity, potency, and freedom from additives.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-icon">📦</div>
+      <div class="step-title">Freshly Packed</div>
+      <p class="step-desc">Sealed at peak freshness in airtight packaging to lock in every note of flavour.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="reviews">
+  <div class="testimonials-header">
+    <div class="section-label">Reviews</div>
+    <h2 class="section-title">What Our Customers Say</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">The turmeric is absolutely incredible — so vibrant in colour and the flavour is worlds apart from supermarket brands. I won't go back.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AW</div>
+        <div>
+          <div class="author-name">Amina Wanjiku</div>
+          <div class="author-role">Home Cook, Nairobi</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">We use Savora blends in our restaurant kitchen every day. The consistency and quality is exceptional — our guests always ask what spice we use.</p>
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">CM</div>
+        <div>
+          <div class="author-name">Chef Moses Kariuki</div>
+          <div class="author-role">Executive Chef, Westlands</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Fast delivery, beautiful packaging, and the Ceylon cinnamon smells like nothing I have ever experienced before. Truly premium.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">FK</div>
+        <div>
+          <div class="author-name">Fatuma Kimani</div>
+          <div class="author-role">Food Blogger, Mombasa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Get 15% Off Your First Order</h2>
+  <p>Join the Savora community and be the first to know about new arrivals, recipes, and exclusive offers.</p>
+  <div class="cta-form">
+    <input type="email" placeholder="Your email address">
+    <button>Subscribe</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo-text">Savora Spices</div>
+      <p>Bringing the world's finest flavours directly to your kitchen. All natural. No additives. Pure goodness.</p>
+      <div class="tagline">Natural Flavor. Pure Goodness.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">All Spices</a></li>
+        <li><a href="#">Blends & Rubs</a></li>
+        <li><a href="#">Herbs</a></li>
+        <li><a href="#">Gift Sets</a></li>
+        <li><a href="#">New Arrivals</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Quality Promise</a></li>
+        <li><a href="#">Sourcing</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Delivery Info</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Track Order</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Savora Spices. All rights reserved.</p>
+    <p>Natural Flavor. Pure Goodness.</p>
+  </div>
+</footer>
+
+</body>
+</html>
