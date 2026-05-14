@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop All Spices – Savora Spices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/savora-shop.css">
+    
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="savora-spices.html" class="nav-logo">
+    <img src="/mnt/user-data/uploads/WhatsApp_Image_2026-05-11_at_12_52_59_PM.jpeg" alt="Savora Spices">
+    <span>Savora Spices</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="savora-shop.html" class="active">Shop</a></li>
+    <li><a href="savora-products.html">Products</a></li>
+    <li><a href="savora-story.html">Our Story</a></li>
+    <li><a href="savora-contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="cart-icon">🛒<span class="cart-badge">3</span></div>
+    <a href="#" class="nav-cta" style="text-decoration:none; color:var(--white); font-size:0.85rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.55rem 1.4rem; background:var(--forest); border-radius:2px;">Order Now</a>
+  </div>
+</nav>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner" style="margin-top:72px;">
+  <p>🎉 <strong>Free delivery</strong> on orders over Ksh 2,500 — Use code <strong>SAVORA15</strong> for 15% off your first order</p>
+  <button class="promo-close">×</button>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="savora-spices.html">Home</a>
+    <span>/</span>
+    <span class="current">All Spices</span>
+  </div>
+  <h1>Shop All Spices</h1>
+  <p>80+ varieties, sourced from 12 countries — all natural, no additives.</p>
+</div>
+
+<!-- SHOP LAYOUT -->
+<div class="shop-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Categories</div>
+      <ul class="filter-list">
+        <li><label><input type="checkbox" checked> All Products <span class="filter-count">80</span></label></li>
+        <li><label><input type="checkbox"> Blends &amp; Rubs <span class="filter-count">24</span></label></li>
+        <li><label><input type="checkbox"> Whole Spices <span class="filter-count">19</span></label></li>
+        <li><label><input type="checkbox"> Ground Spices <span class="filter-count">17</span></label></li>
+        <li><label><input type="checkbox"> Herbs &amp; Leaves <span class="filter-count">12</span></label></li>
+        <li><label><input type="checkbox"> Chillies &amp; Peppers <span class="filter-count">8</span></label></li>
+        <li><label><input type="checkbox"> Gift Sets <span class="filter-count">9</span></label></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Price Range (Ksh)</div>
+      <div class="price-range-labels"><span>0</span><span id="price-val">1,500</span></div>
+      <input type="range" min="0" max="3000" value="1500" id="price-range"
+        oninput="document.getElementById('price-val').textContent = parseInt(this.value).toLocaleString()">
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Country of Origin</div>
+      <div class="origin-tags">
+        <span class="origin-tag active">India</span>
+        <span class="origin-tag">Sri Lanka</span>
+        <span class="origin-tag">Ethiopia</span>
+        <span class="origin-tag">Kenya</span>
+        <span class="origin-tag">Mexico</span>
+        <span class="origin-tag">Morocco</span>
+        <span class="origin-tag">Vietnam</span>
+        <span class="origin-tag">Indonesia</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Certifications</div>
+      <ul class="filter-list">
+        <li><label><input type="checkbox"> Organic Certified</label></li>
+        <li><label><input type="checkbox"> Non-GMO</label></li>
+        <li><label><input type="checkbox"> Salt-Free</label></li>
+        <li><label><input type="checkbox"> Gluten Free</label></li>
+        <li><label><input type="checkbox"> Vegan</label></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Heat Level</div>
+      <ul class="filter-list">
+        <li><label><input type="checkbox"> 🟢 Mild</label></li>
+        <li><label><input type="checkbox"> 🟡 Medium</label></li>
+        <li><label><input type="checkbox"> 🔴 Hot</label></li>
+        <li><label><input type="checkbox"> 🌋 Extra Hot</label></li>
+      </ul>
+    </div>
+
+    <button class="clear-btn">Clear All Filters</button>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="shop-main">
+
+    <div class="shop-toolbar">
+      <p class="result-count">Showing <strong>72 products</strong> · Filtered by: India</p>
+      <div class="toolbar-right">
+        <select class="sort-select">
+          <option>Sort: Featured</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Newest Arrivals</option>
+          <option>Best Sellers</option>
+          <option>Highest Rated</option>
+        </select>
+        <div class="view-toggle">
+          <button class="view-btn active" id="grid-btn" title="Grid view">⊞</button>
+          <button class="view-btn" id="list-btn" title="List view">☰</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVE FILTERS -->
+    <div class="active-filters">
+      <div class="filter-pill">India <button>×</button></div>
+      <div class="filter-pill">Organic <button>×</button></div>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div class="products-grid" id="products-grid">
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <span class="badge badge-hot">🔥 Hot</span>
+          <button class="wishlist-btn">♡</button>
+          <span class="product-emoji">🌶️</span>
+        </div>
+        <div class="product-body">
+          <div class="product-meta">
+            <span class="product-origin">India</span>
+            <span class="product-rating"><span>★★★★★</span> (128)</span>
+          </div>
+          <div class="product-name">Kashmiri Red Chilli Powder</div>
+          <p class="product-desc">Brilliantly red, mildly hot, and deeply aromatic. The secret behind rich, vibrant curries.</p>
+          <div class="product-footer">
+            <div>
+              <div class="price-wrap"><span class="price">Ksh 420</span></div>
+              <div class="size-tag">100g</div>
+            </div>
+            <button class="add-btn">+ Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <span class="badge badge-organic">Organic</span>
+          <button class="wishlist-btn">♡</button>
+          <span class="product-emoji">🫚</span>
+        </div>
+        <div class="product-body">
+          <div class="product-meta">
+            <span class="product-origin">India</span>
+            <span class="product-rating"><span>★★★★★</span> (243)</span>
+          </div>
+          <div class="product-name">Highland Turmeric Powder</div>
+          <p class="product-desc">Altitude-grown for maximum curcumin. Rich, earthy, brilliantly golden in every dish.</p>
+          <div class="product-footer">
+            <div>
+              <div class="price-wrap"><span class="price">Ksh 450</span></div>
+              <div class="size-tag">100g</div>
+            </div>
+            <button class="add-btn">+ Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <span class="badge badge-new">New</span>
+          <button class="wishlist-btn">♡</button>
+          <span class="product-emoji">🌿</span>
+        </div>
+        <div class="product-body">
+          <div class="product-meta">
+            <span class="product-origin">Sri Lanka</span>
+            <span class="product-rating"><span>★★★★☆</span> (87)</span>
+          </div>
+          <div class="product-name">True Ceylon Cinnamon</div>
+          <p class="product-desc">Delicate, sweet, and complex — the world's finest cinnamon. Distinct from cassia entirely.</p>
+          <div class="product-footer">
+            <div>
+              <div class="price-wrap"><span class="price">Ksh 380</span><span class="price-old">Ksh 490</span></div>
+              <div class="size-tag">50g</div>
+            </div>
+            <button class="add-btn">+ Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <button class="wishlist-btn">♡</button>
+          <span class="product-emoji">⭐</span>
+        </div>
+        <div class="product-body">
+          <div class="product-meta">
+            <span class="product-origin">India</span>
+            <span class="product-rating"><span>★★★★★</span> (196)</span>
+          </div>
+          <div class="product-name">Green Cardamom Pods</div>
+          <p class="product-desc">Sweet, floral, and intensely fragrant. Essential for chai, biryanis, and desserts.</p>
+          <div class="product-footer">
+            <div>
+              <div class="price-wrap"><span class="price">Ksh 680</span></div>
+              <div class="size-tag">50g</div>
+            </div>
+            <button class="add-btn">+ Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <span class="badge badge-sale">Sale</span>
+          <button class="wishlist-btn">♡</button>
+          <span class="product-emoji">🌑</span>
+        </div>
+        <div class="product-body">
+          <div class="product-meta">
+            <span class="product-origin">Vietnam</span>
+            <span class="product-rating"><span>★★★★★</span> (312)</span>
+          </div>
+          <div class="product-name">Saigon Black Pepper</div>
+          <p class="product-desc">Bold, pungent, and warmly spicy — the highest piperine content of any black pepper on earth.</p>
+          <div class="product-footer">
+            <div>
+              <div class="price-wrap"><span class="price">Ksh 350</span><span class="price-old">Ksh 420</span></div>
+              <div class="size-tag">75g</div>
+            </div>
+            <button class="add-btn">+ Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <span class="badge badge-organic">Organic</span>
+          <button class="wishlist-btn">♡</button>
+          <span class="product-emoji">🟤</span>
+        </div>
+        <div class="product-body">
+          <div class="product-meta">
+            <span class="product-origin">Ethiopia</span>
+            <span class="product-rating"><span>★★★★☆</span> (74)</span>
+          </div>
+          <div class="product-name">Berbere Spice Blend</div>
+          <p class="product-desc">A bold East African blend of chilli, fenugreek, and warming aromatics. Soul of Ethiopian cooking.</p>
+          <div class="product-footer">
+            <div>
+              <div class="price-wrap"><span class="price">Ksh 520</span></div>
+              <div class="size-tag">80g</div>
+            </div>
+            <button class="add-btn">+ Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <button class="wishlist-btn">♡</button>
+          <span class="product-emoji">🌸</span>
+        </div>
+        <div class="product-body">
+          <div class="product-meta">
+            <span class="product-origin">Morocco</span>
+            <span class="product-rating"><span>★★★★★</span> (59)</span>
+          </div>
+          <div class="product-name">Ras el Hanout Blend</div>
+          <p class="product-desc">Over 20 spices in perfect harmony. The crown jewel of North African cuisine.</p>
+          <div class="product-footer">
+            <div>
+              <div class="price-wrap"><span class="price">Ksh 590</span></div>
+              <div class="size-tag">75g</div>
+            </div>
+            <button class="add-btn">+ Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <span class="badge badge-new">New</span>
+          <button class="wishlist-btn">♡</button>
+          <span class="product-emoji">🌰</span>
+        </div>
+        <div class="product-body">
+          <div class="product-meta">
+            <span class="product-origin">Kenya</span>
+            <span class="product-rating"><span>★★★★☆</span> (41)</span>
+          </div>
+          <div class="product-name">Kenyan Pilipili Blend</div>
+          <p class="product-desc">A fiery homegrown blend built for nyama choma, stews, and East African street food.</p>
+          <div class="product-footer">
+            <div>
+              <div class="price-wrap"><span class="price">Ksh 340</span></div>
+              <div class="size-tag">60g</div>
+            </div>
+            <button class="add-btn">+ Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <button class="wishlist-btn">♡</button>
+          <span class="product-emoji">⚫</span>
+        </div>
+        <div class="product-body">
+          <div class="product-meta">
+            <span class="product-origin">Indonesia</span>
+            <span class="product-rating"><span>★★★★★</span> (103)</span>
+          </div>
+          <div class="product-name">Indonesian Cloves</div>
+          <p class="product-desc">Intensely aromatic, warm, and slightly sweet. Whole cloves from the spice islands themselves.</p>
+          <div class="product-footer">
+            <div>
+              <div class="price-wrap"><span class="price">Ksh 410</span></div>
+              <div class="size-tag">50g</div>
+            </div>
+            <button class="add-btn">+ Cart</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /products-grid -->
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <button class="page-btn arrow">‹</button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">4</button>
+      <span style="color:var(--text-muted); padding: 0 0.3rem;">…</span>
+      <button class="page-btn">9</button>
+      <button class="page-btn arrow">›</button>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Savora Spices</div>
+  <p>Natural Flavor. Pure Goodness. · © 2026 Savora Spices. All rights reserved.</p>
+</footer>
+<script src="js/savora-shop.js"></script>
+</body>
+</html>
